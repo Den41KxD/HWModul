@@ -89,7 +89,7 @@ class TovarBuy(LoginRequiredMixin,CreateView):
         return Note.objects.get(id=queryset)
 
 
-class UpdateNote(UpdateView):
+class UpdateNote(LoginRequiredMixin,UpdateView):
     model = Note
     fields = ['title','text','instock','price']
     template_name = 'Update.html'
@@ -152,7 +152,7 @@ class ReturnOneBuy(LoginRequiredMixin,DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class ReturnCheck(ListView):
+class ReturnCheck(LoginRequiredMixin, ListView):
     model = ReturnBuy
     template_name = 'ReturnCheck.html'
 
