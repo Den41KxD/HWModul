@@ -9,7 +9,7 @@ class NoteListViewNotLogin(ListView):
     model = Note
     template_name = 'NotLog.html'
     paginate_by = 5
-    ordering = ['-created_at', ]
+    ordering = ['-id']
 
 
 class Login(LoginView):
