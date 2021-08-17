@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="position-absolute top-0 end-0">
+    <a class="btn btn-primary"  href="{% url 'logout' %}">Logout</a>
+
+        <h6> Money: {{ User.money}}</h6>
+         <h6>  User: {{ User.username }}</h6>
+    <a class="btn btn-primary position-relative" href="{% url 'mybuy' %}">MyBuy</a>
+
+    </div>
+
+    <div>
+    <div >
+        {% for obj in page_obj %} {# обратите внимание я заменил объект #}
+            <div class="col-4">
+
+        <form method="post" action="{% url 'TovarBuy' obj.pk%}" >
+        {% csrf_token %}
+            <h4> {{ obj.title }}</h4>
+            <h5>Description: {{ obj.text }}</h5>
+            <h6>{{ obj.instock }} In stock</h6>
+            <h6>{{ obj.price }} $</h6>
+            <h5>{{ create_form }}
+        <input class="btn btn-primary" type="submit" value="buy" ></h5>
+    </form>
+
+            </div>
+        {% endfor %}
+    </div>
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

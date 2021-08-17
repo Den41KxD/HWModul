@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>All your Buy's:</h4>
+<div class="position-absolute top-0 end-0">
+    <a class="btn btn-primary"  href="{% url 'logout' %}">Logout</a>
+
+        <h6> Money: {{ User.money}}</h6>
+         <h6>  User: {{ User.username }}</h6>
+    <a class="btn btn-primary position-relative" href="{% url 'index' %}">Products</a>
+
+    </div>
+    {% for obj in object_list %}
+
+
+            {% if obj.author == request.user %}
+                  <div><form method="post" action="{% url 'mybuy' obj.pk %}" >
+    {% csrf_token %}
+                <h6>{{ obj.buy.title }}</h6>
+                <h6>Quantity: {{ obj.quantity }}</h6>
+                <h6>{{ obj.timeOfBuy }}</h6>
+                {% if obj.canReturn %}
+                <input class="btn btn-success" type="submit" value="return" onclick=style.display='none'>
+                    {% else %}
+                        <h5 class="text-danger">You cant return this buy because:
+                            <h6>1.time to return is over</h6>
+                            <h6>2.You have already submitted a return request</h6>
+                        </h5>
+
+                    {% endif %}
+            </form>
+            {% endif %}
+
+            </div>
+        {% endfor %}
+
+
+
+{% endblock %}

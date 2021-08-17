@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        {% for obj in object_list %} {# обратите внимание я заменил объект #}
+            <div>
+
+                <h5> {{ obj.returnBuy.buy.title }}</h5>
+                <h5> quantity: {{ obj.returnBuy.quantity }}</h5>
+                <h5>Price: {{ obj.returnBuy.buy.price }}</h5>
+                <h5>{{ obj.returnBuy.timeOfBuy }}</h5>
+                <h6> User: {{ obj.author.username }}</h6>
+            <form method="post" action="{% url 'acceptreturncheck' obj.pk %}">
+                    {% csrf_token %}
+                    <input class="btn btn-success" type="submit" value="Return">
+                            </form>
+
+
+                <form method="post" action="{% url 'notreturncheck' obj.pk %}">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="NotReturn">
+                            </form>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <h5>For buy =>
+        <a class="btn btn-primary"  href="{% url 'login' %}">Login</a>
+        or
+        <a class="btn btn-primary" href="{% url 'register' %}">Register</a>
+        </h5>
+    </div>
+
+    <div>
+        {% for obj in page_obj %} {# обратите внимание я заменил объект #}
+            <div>
+                  <h4> {{ obj.title }}</h4>
+            <h5>Description: {{ obj.text }}</h5>
+            <h6>{{ obj.instock }} In stock</h6>
+            <h6>{{ obj.price }} $</h6>
+            </div>
+        {% endfor %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <h6 class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </h6>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+    </div>
+{% endblock %}
+
+
